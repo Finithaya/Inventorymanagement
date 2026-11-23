@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Manager Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #f1f5f9;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 900px;
+            padding: 40px;
+        }
+
+        .center-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #e2e8f0;
+            letter-spacing: 1px;
+        }
+
+        .option-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 18px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: #f8fafc;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .option-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+            background: rgba(51, 65, 85, 0.95);
+        }
+
+        .left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .stock {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        }
+
+        .monitor {
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+
+        .entries {
+            background: linear-gradient(135deg, #ea580c, #c2410c);
+        }
+
+        .text h3 {
+            font-size: 19px;
+            font-weight: 600;
+        }
+
+        .text p {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .arrow {
+            font-size: 20px;
+            color: #94a3b8;
+            transition: 0.3s;
+        }
+
+        .option-card:hover .arrow {
+            transform: translateX(6px);
+            color: #ffffff;
+        }
+
+        .back-home-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #334155;
+            box-shadow: 0 0 15px rgba(148, 163, 184, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            .option-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .arrow {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1 class="center-title">Manager Dashboard</h1>
+   <a th:href="@{/manager/add-stock}" class="option-card">
+        <div class="left">
+            <div class="icon stock">
+                <i class="fas fa-warehouse"></i>
+            </div>
+            <div class="text">
+                <h3>Add & Update Stock</h3>
+                <p>Update product stock quantities</p>
+            </div>
+        </div>
+        <i class="fas fa-arrow-right arrow"></i>
+    </a>
+    <a th:href="@{/manager/monitor-stock}" class="option-card">
+        <div class="left">
+            <div class="icon monitor">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="text">
+                <h3>Monitor Stock Levels</h3>
+                <p>View real-time inventory quantity</p>
+            </div>
+        </div>
+        <i class="fas fa-arrow-right arrow"></i>
+    </a>
+    <a th:href="@{/manager/entries}" class="option-card">
+        <div class="left">
+            <div class="icon entries">
+                <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <div class="text">
+                <h3>Purchase & Sales Entries</h3>
+                <p>Record daily purchase and sales data</p>
+            </div>
+        </div>
+        <i class="fas fa-arrow-right arrow"></i>
+    </a>
+<a th:href="@{/manager/low-stock}" class="option-card">
+    <div class="left">
+        <div class="icon reports">
+            <i class="fas fa-triangle-exclamation"></i>
+        </div>
+        <div class="text">
+            <h3>Low Stock Alert</h3>
+            <p>View products with low inventory</p>
+        </div>
+    </div>
+    <i class="fas fa-arrow-right arrow"></i>
+</a>
+      <div class="back-home-container">
+        <a th:href="@{/}" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+</div>
+</body>
+</html>

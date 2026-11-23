@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Purchase Report</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+        body {
+            background: #0f172a;
+            color: #f1f5f9;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #f1f5f9;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+        }
+
+        .form-control, .form-select {
+            background: rgba(255,255,255,0.05);
+            color: #f1f5f9;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 15px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            box-shadow: 0 0 10px #4f46e5;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-success {
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .table {
+            background: rgba(15,23,42,0.8);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table thead {
+            background: rgba(255,255,255,0.1);
+            font-weight: 600;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(255,255,255,0.05);
+            transform: scale(1.01);
+            transition: all 0.2s;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+
+        .table-responsive {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .text-end a.btn {
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">📊 Purchase Report</h2>
+    <div class="card">
+        <form th:action="@{/reports/purchase}" method="get" class="row g-3 align-items-end">
+           <div class="col-md-4">
+                <label class="form-label">From Date</label>
+                <input type="date" name="startDate" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">To Date</label>
+                <input type="date" name="endDate" class="form-control">
+            </div>
+            <div class="col-md-4 d-flex">
+                <button type="submit" class="btn btn-warning w-100">Generate Report</button>
+            </div>
+            <div class="col-12 text-end">
+                <a th:href="@{/reports/purchase/excel}" class="btn btn-success">
+                    📥 Download Excel
+                </a>
+            </div>
+    </form>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-dark text-light">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total Cost</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="purchase : ${purchases}">
+                    <td th:text="${purchase.id}"></td>
+                    <td th:text="${purchase.product != null ? purchase.product.name : 'N/A'}"></td>
+                    <td th:text="${purchase.quantity}"></td>
+                    <td th:text="${purchase.totalCost}"></td>
+                    <td th:text="${purchase.date}"></td>
+                </tr>
+               <tr th:if="${#lists.isEmpty(purchases)}">
+                    <td colspan="5" class="text-center text-success">✅ No purchases found for selected dates</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

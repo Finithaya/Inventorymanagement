@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Monitor Stock Level</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+        body {
+            background: #0f172a;
+            color: #f1f5f9;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+      .container {
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+      .card {
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+        }
+       h3 {
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #f1f5f9;
+        }
+       .table {
+            color: #f1f5f9;
+        }
+        .table thead {
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+        }
+        .table-hover tbody tr:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.01);
+        }
+        .badge-out {
+            background: #ef4444;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 12px;
+        }
+        .badge-low {
+            background: #f59e0b;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 12px;
+        }
+        .badge-ok {
+            background: #22c55e;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 12px;
+        }
+
+        
+        .btn-back {
+            background: transparent;
+            border: 2px solid #f1f5f9;
+            color: #f1f5f9;
+            transition: all 0.3s;
+        }
+        .btn-back:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+       
+        @media (max-width: 768px) {
+            .card {
+                padding: 20px;
+            }
+            h3 {
+                font-size: 1.6rem;
+            }
+            .badge-out, .badge-low, .badge-ok {
+                padding: 4px 10px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h3>📊 Monitor Stock Level</h3>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${products}">
+                    <td th:text="${p.id}">1</td>
+                    <td th:text="${p.name}">Sample Product</td>
+                    <td th:text="${p.category != null ? p.category.name : 'N/A'}">Category</td>
+                    <td th:text="${p.quantity}">0</td>
+                    <td>
+                        <span th:if="${p.quantity == 0}" class="badge badge-out">OUT OF STOCK</span>
+                        <span th:if="${p.quantity > 0 and p.quantity <= 5}" class="badge badge-low">LOW STOCK</span>
+                        <span th:if="${p.quantity > 5}" class="badge badge-ok">IN STOCK</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center mt-4">
+            <a th:href="@{/manager/dashboard}" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

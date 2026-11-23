@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Sales Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:#f1f5f9;
+    padding:30px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#38bdf8;
+}
+
+/* BACK BUTTON */
+.btn-back{
+    display:inline-block;
+    margin-bottom:20px;
+    padding:8px 15px;
+    background:#f59e0b;
+    color:white;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.btn-back:hover{
+    background:#d97706;
+}
+
+/* FILTER BOX */
+.filter-box{
+    background:rgba(30,41,59,0.9);
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:25px;
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+input,select{
+    padding:8px;
+    border-radius:6px;
+    border:none;
+}
+
+button,.btn-download{
+    padding:8px 15px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    text-decoration:none;
+    color:white;
+}
+
+button{
+    background:#2563eb;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.btn-download{
+    background:#16a34a;
+}
+
+.btn-download:hover{
+    background:#15803d;
+}
+
+/* SUMMARY CARDS */
+.summary{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:rgba(51,65,85,0.8);
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.card h4{
+    margin-bottom:10px;
+    font-size:16px;
+    color:#cbd5e1;
+}
+
+.card p{
+    font-size:20px;
+    font-weight:700;
+    color:#38bdf8;
+}
+
+/* TABLE */
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:rgba(30,41,59,0.85);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+th,td{
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#1e293b;
+}
+
+tr:nth-child(even){
+    background:rgba(71,85,105,0.6);
+}
+
+tr:hover{
+    background:rgba(59,130,246,0.3);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📊 Sales Report Generation</h2>
+
+<!-- BACK TO DASHBOARD -->
+<a th:href="@{/reports/dashboard}" class="btn-back">⬅ Back to Dashboard</a>
+<form th:action="@{/reports/sales}" method="get" class="filter-box">
+
+<label>From:</label>
+<input type="date" name="fromDate">
+
+<label>To:</label>
+<input type="date" name="toDate">
+
+<label>Product:</label>
+<select name="productId">
+<option value="">All Products</option>
+<option th:each="product : ${products}"
+        th:value="${product.id}"
+        th:text="${product.name}">
+</option>
+</select>
+
+<button type="submit">Generate</button>
+
+<a th:href="@{/reports/sales/excel}" class="btn-download">
+Export Excel
+</a>
+
+</form>
+
+<div class="summary">
+
+<div class="card">
+<h4>Total Sales</h4>
+<p th:text="${totalSales}">0</p>
+</div>
+
+<div class="card">
+<h4>Total Revenue</h4>
+<p th:text="${totalRevenue}">0</p>
+</div>
+
+<div class="card">
+<h4>Total Quantity Sold</h4>
+<p th:text="${totalQuantity}">0</p>
+</div>
+
+<div class="card">
+<h4>Best Selling Product</h4>
+<p th:text="${bestProduct}">N/A</p>
+</div>
+
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Product</th>
+<th>Quantity</th>
+<th>Total Amount</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody>
+<tr th:each="sale : ${sales}">
+<td th:text="${sale.id}"></td>
+<td th:text="${sale.product != null ? sale.product.name : 'N/A'}"></td>
+<td th:text="${sale.quantity}"></td>
+<td th:text="${sale.totalAmount}"></td>
+<td th:text="${sale.date}"></td>
+</tr>
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+</html>
