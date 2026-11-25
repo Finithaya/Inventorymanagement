@@ -1,26 +1,18 @@
-# Inventory Management System
+📦 Inventory & Stock Management System
 
-A web-based Inventory Management System built with Java, Spring Boot, and MySQL to manage products, stock, and orders efficiently.
+A web-based application developed using Java and Spring Boot to manage products, track stock levels, and maintain inventory records.
 
-## Features
-- Add, Update, Delete Products
-- Manage Stock & Inventory
-- User-friendly Web Interface
-- Search & Filter Products
-- Secure Database Management
+🛠️ Technologies Used
 
-## Tech Stack
-- **Backend:** Java, Spring Boot
-- **Frontend:** HTML, CSS, JavaScript
-- **Database:** MySQL
-- **Build Tool:** Maven
+-  Java
+-  Spring Boot
+-  MySQL
+-  Thymeleaf
+-  HTML, CSS, Bootstrap
 
-## How to Run
-1. Clone this repository
-2. Open in Eclipse / STS
-3. Update MySQL username & password in `application.properties`
-4. Run as Spring Boot App
-5. Open in browser: `http://localhost:8080`
+✨ Features
 
-## Author
-**Finithaya**
+-  Add, update, and delete products
+-  Manage inventory records
+-  Track stock quantities
+-  Search products
